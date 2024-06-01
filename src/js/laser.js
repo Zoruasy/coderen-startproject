@@ -40,6 +40,7 @@ export class Laser extends Actor {
         if (event.other instanceof Dragon) {
             event.other.kill(); // Remove the dragon
             this.kill(); // Remove the laser
+            event.other.scene.engine.goToScene('gameover'); // Transition to the game over scene
         }
     }
 }

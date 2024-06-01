@@ -1,9 +1,9 @@
-import { Scene, Label, Font, FontUnit, Color, Actor, vec, Sprite } from "excalibur";
+import { Scene, Actor, vec } from "excalibur";
 import { Resources } from '../resources.js';
 
 export class StartGame extends Scene {
     onInitialize(engine) {
-      // achtergrond
+        // Background
         const background = new Actor({
             pos: vec(engine.drawWidth / 2, engine.drawHeight / 2),
             width: engine.drawWidth,
@@ -22,16 +22,6 @@ export class StartGame extends Scene {
         gameLogo.anchor.setTo(0.5, 0.5);
         this.add(gameLogo);
 
-        // Game Title
-        const gameStartLabel = new Label({
-           
-            pos: vec(engine.drawWidth / 2, engine.drawHeight / 2 - 100),
-           
-        });
-        
-        gameStartLabel.anchor.setTo(0.5, 0.5);
-        this.add(gameStartLabel);
-
         // Start Button
         const startButton = new Actor({
             pos: vec(engine.drawWidth / 2, engine.drawHeight / 2 + 50),
@@ -41,21 +31,6 @@ export class StartGame extends Scene {
         startButton.graphics.use(Resources.Button.toSprite());
         startButton.anchor.setTo(0.5, 0.5);
         this.add(startButton);
-
-        // Button Text
-        const buttonText = new Label({
-            
-            pos: vec(engine.drawWidth / 2, engine.drawHeight / 2 + 50),
-            font: new Font({
-                family: 'Arial',
-                size: 30,
-                unit: FontUnit.Px,
-                color: Color.White,
-                textAlign: 'center'
-            })
-        });
-        buttonText.anchor.setTo(0.5, 0.5);
-        this.add(buttonText);
 
         // Click event to go to main game scene
         startButton.on('pointerup', () => {
@@ -68,11 +43,11 @@ export class StartGame extends Scene {
 
         // Hover effect
         startButton.on('pointerenter', () => {
-            startButton.color = Color.LightGray;
+            startButton.graphics.opacity = 0.7; // Change opacity on hover
         });
 
         startButton.on('pointerleave', () => {
-            startButton.color = Color.Gray;
+            startButton.graphics.opacity = 1; // Reset opacity on leave
         });
     }
 }

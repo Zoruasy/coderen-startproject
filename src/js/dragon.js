@@ -10,25 +10,25 @@ export class Dragon extends Actor {
             height: 50
         });
         const dragonSprite = Resources.Dragon.toSprite();
-        dragonSprite.scale = new Vector(0.33, 0.33); // Schaal de draak naar 1/3 van de originele grootte
+        dragonSprite.scale = new Vector(0.33, 0.33); // Scale the dragon to 1/3 of its original size
         this.graphics.use(dragonSprite);
-       
+        this.isShooting = false;
     }
 
     onInitialize(engine) {
         this.engine = engine;
         this.on('preupdate', this.updateMovement.bind(this));
-// Listen for the 'press' event of the keyboard
-this.engine.input.keyboard.on('press', (evt) => {
-    // If the space key is pressed and the dragon is not shooting, call the shoot method
-    if (evt.key === 'Space' && !this.isShooting) {
-        this.shoot();
+        // Listen for the 'press' event of the keyboard
+        this.engine.input.keyboard.on('press', (evt) => {
+            // If the space key is pressed and the dragon is not shooting, call the shoot method
+            if (evt.key === Input.Keys.Space && !this.isShooting) {
+                this.shoot();
             }
         });
     }
 
     updateMovement(evt) {
-        const speed = 200; // pixels per seconde
+        const speed = 200; // pixels per second
         let moveDir = new Vector(0, 0);
 
         if (this.engine.input.keyboard.isHeld(Input.Keys.Left)) {
@@ -53,13 +53,8 @@ this.engine.input.keyboard.on('press', (evt) => {
         this.engine.add(bullet);
         this.isShooting = true; 
 
-        
-        
         this.actions.delay(500).callMethod(() => {
             this.isShooting = false;
         });
-    
     }
-
-    
 }
