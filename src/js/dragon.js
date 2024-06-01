@@ -1,6 +1,38 @@
-import { Actor, Input, Vector } from "excalibur";
+import { Actor, Input, Vector, Timer } from "excalibur";
 import { Bullet } from "./bullet";
 import { Resources } from './resources';
+
+// Shooting component
+class Shooting {
+    constructor(actor, shootInterval = 500) {
+        this.actor = actor;
+        this.shootInterval = shootInterval;
+        this.isShooting = false;
+        this.shootTimer = new Timer({
+            fcn: () => { this.isShooting = false; },
+            interval: this.shootInterval,
+            repeats: false
+        });
+    }
+
+    shoot() {
+        if (!this.isShooting) {
+            const direction = new Vector(-1, 0); // Shoot straight ahead
+            const bullet = new Bullet(this.actor.pos.x, this.actor.pos.y, direction);
+            this.actor.engine.add(bullet);
+            this.isShooting = true;
+
+            // Restart the timer to reset shooting
+            this.shootTimer.reset();
+            this.actor.engine.add(this.shootTimer);
+            this.shootTimer.start();
+        }
+    }
+
+    initialize(engine) {
+        this.engine = engine;
+    }
+}
 
 export class Dragon extends Actor {
     constructor(x, y) {
@@ -12,17 +44,21 @@ export class Dragon extends Actor {
         const dragonSprite = Resources.Dragon.toSprite();
         dragonSprite.scale = new Vector(0.33, 0.33); // Scale the dragon to 1/3 of its original size
         this.graphics.use(dragonSprite);
-        this.isShooting = false;
+
+        // Add Shooting component
+        this.shooting = new Shooting(this);
     }
 
     onInitialize(engine) {
         this.engine = engine;
+        this.shooting.initialize(engine);
         this.on('preupdate', this.updateMovement.bind(this));
+
         // Listen for the 'press' event of the keyboard
         this.engine.input.keyboard.on('press', (evt) => {
-            // If the space key is pressed and the dragon is not shooting, call the shoot method
-            if (evt.key === Input.Keys.Space && !this.isShooting) {
-                this.shoot();
+            // If the space key is pressed, call the shoot method
+            if (evt.key === Input.Keys.Space) {
+                this.shooting.shoot();
             }
         });
     }
@@ -46,15 +82,6 @@ export class Dragon extends Actor {
 
         this.vel = moveDir.scale(speed);
     }
-
-    shoot() {
-        const direction = new Vector(-1, 0); // Shoot straight ahead
-        const bullet = new Bullet(this.pos.x, this.pos.y, direction);
-        this.engine.add(bullet);
-        this.isShooting = true; 
-
-        this.actions.delay(500).callMethod(() => {
-            this.isShooting = false;
-        });
-    }
 }
+
+// klaar
