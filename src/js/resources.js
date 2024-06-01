@@ -1,16 +1,22 @@
-import { ImageSource, Sound, Resource, Loader } from 'excalibur'
+import { ImageSource, Loader } from "excalibur";
 
-// voeg hier jouw eigen resources toe
+// Define image resources
+const dragonImage = new ImageSource('/images/dragon.png');
+const spaceshipImage = new ImageSource('/images/spaceship.png');
+const bulletImage = new ImageSource('/images/bullet.png');
+const laserImage = new ImageSource('/images/laser.png');
+const backgroundImage = new ImageSource('/images/background.png'); 
+
+// Group resources in an object
 const Resources = {
-    Fish: new ImageSource('images/fish.png')
-}
+    Dragon: dragonImage,
+    Spaceship: spaceshipImage,
+    Bullet: bulletImage,
+    Background: backgroundImage,
+    Laser: laserImage
+};
 
+// Create a loader with all the resources
+const ResourceLoader = new Loader(Object.values(Resources));
 
-
-
-const ResourceLoader = new Loader()
-for (let res of Object.values(Resources)) {
-    ResourceLoader.addResource(res)
-}
-
-export { Resources, ResourceLoader }
+export { Resources, ResourceLoader };
