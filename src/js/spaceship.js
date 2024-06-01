@@ -3,6 +3,23 @@ import { Resources } from './resources';
 import { Dragon } from './dragon';
 import { Laser } from './laser';
 
+// Health component
+class Health {
+    constructor(maxHealth) {
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
+    }
+
+    takeDamage(amount) {
+        this.currentHealth -= amount;
+        if (this.currentHealth <= 0) {
+            this.currentHealth = 0;
+            return true; // Return true if the object is destroyed
+        }
+        return false; // Return false if the object is still alive
+    }
+}
+
 export class Spaceship extends Actor {
     constructor(x, y) {
         super({
@@ -15,6 +32,9 @@ export class Spaceship extends Actor {
         spaceshipSprite.scale = new Vector(0.2, 0.2);
         this.graphics.use(spaceshipSprite);
         this.collider.set(Shape.Box(this.width * 0.5, this.height * 0.5));
+
+        // Add Health component
+        this.health = new Health(100);
     }
 
     onInitialize(engine) {
@@ -42,7 +62,10 @@ export class Spaceship extends Actor {
 
     checkCollision(event) {
         if (event.other instanceof Laser) {
-            this.takeDamage();
+            const destroyed = this.health.takeDamage(10); // Reduce health by 10 when hit by a laser
+            if (destroyed) {
+                this.destroy(); // Destroy the spaceship if its health reaches zero
+            }
         }
     }
 
@@ -55,14 +78,5 @@ export class Spaceship extends Actor {
                 this.engine.add(laser);
             }
         }
-    }
-
-    takeDamage() {
-        if (this.health <= 0) {
-            this.shootTimer.cancel();
-            this.explode(); // Call explode method if spaceship health is 0 or below
-            this.kill();
-        }
-    
     }
 }
