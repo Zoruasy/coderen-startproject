@@ -1,13 +1,13 @@
 import { ImageSource, Loader } from "excalibur";
 
 // Define image resources
-const dragonImage = new ImageSource('/images/dragon.png');
-const spaceshipImage = new ImageSource('/images/spaceship.png');
-const bulletImage = new ImageSource('/images/bullet.png');
-const laserImage = new ImageSource('/images/laser.png');
-const backgroundImage = new ImageSource('/images/background.png');
-const buttonImage = new ImageSource('/images/button.png');
-const gameLogoImage = new ImageSource('/images/gamelogo.png');
+const dragonImage = new ImageSource('images/dragon.png');
+const spaceshipImage = new ImageSource('images/spaceship.png');
+const bulletImage = new ImageSource('images/bullet.png');
+const laserImage = new ImageSource('images/laser.png');
+const backgroundImage = new ImageSource('images/background.png');
+const buttonImage = new ImageSource('images/button.png');
+const gameLogoImage = new ImageSource('images/gamelogo.png');
 const gameOverImage = new ImageSource('images/gameover.png');
 const YoulostImage = new ImageSource('images/youlost.png');
 const RestartImage = new ImageSource('images/restart.png');
@@ -15,13 +15,13 @@ const RestartImage = new ImageSource('images/restart.png');
 
 // Define fly animation images
 const flyImages = [
-    new ImageSource('/animated/fly01.png'),
-    new ImageSource('/animated/fly02.png'),
-    new ImageSource('/animated/fly03.png'),
-    new ImageSource('/animated/fly04.png'),
-    new ImageSource('/animated/fly05.png'),
-    new ImageSource('/animated/fly06.png'),
-    new ImageSource('/animated/fly07.png')
+    new ImageSource('animated/fly01.png'),
+    new ImageSource('animated/fly02.png'),
+    new ImageSource('animated/fly03.png'),
+    new ImageSource('animated/fly04.png'),
+    new ImageSource('animated/fly05.png'),
+    new ImageSource('animated/fly06.png'),
+    new ImageSource('animated/fly07.png')
 ];
 
 // Group resources in an object
